@@ -47,7 +47,6 @@ Veewee::Definition.declare({
     'virtualbox.sh',
     'vagrant.sh',
     'ruby.sh',
-    'add_chef.sh',
     'add_puppet.sh',
     'add_vim.sh',
     'cron.sh',
