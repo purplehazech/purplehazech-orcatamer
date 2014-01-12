@@ -2,7 +2,9 @@
 source /etc/profile
 
 # install eix as a dep to puppet
+chroot "$chroot" /bin/bash <<DATAEOF
 emerge eix -1k
+DATAEOF
 
 # install Puppet
 chroot "$chroot" /bin/bash <<DATAEOF
