@@ -1,17 +1,28 @@
 # gentoo-dev
 
 Contains my personal development setup I use for developing
-gentoo related things.
+gentoo related things. For now this only has 64bit support.
 
-This assumes a recent gentoo vagrant box to be loaded as
-``gentoo-dev``. I build my boxes locally using veewee like
-so.
+## install
+### vagrant
+I use vagrant from http://vagrantup.com
+
+### veewee
 
 ``bash
-veewee vbox define 'gentoo-dev' 'gentoo-latest-amd64'
-veewee vbox build  'gentoo-dev' --workdir=~/git.repos/veewee
+# install veewee
+rvm 2.1.0 exec bundle install
+# call veewee like so after install (create an alias)
+rvm 2.1.0 exec bundle exec veewee
+``
+
+## veewee usage
+
+``bash
+veewee vbox build  'gentoo-dev' --workdir=~/git.repos/gentoo-dev
 veewee vbox export 'gentoo-dev'
 ``
+
 
 ## todo
 * [ ] install librarian-puppet during veewee phase (see shell/bootstrap.sh)

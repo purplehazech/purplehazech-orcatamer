@@ -4,3 +4,6 @@
 modules
 portage/packages
 Puppetfile.lock
+.bundle
+iso
+Gemfile.lock
