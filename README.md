@@ -28,15 +28,23 @@ veewee vbox export 'gentoo-dev'
 after building with veewee the following should work
 
 ``bash
-vagrant box add gentoo-dev ...box
+vagrant box add gentoo-dev gentoo-dev.box
 vagrant up
 ``
+
+## usage
+
+You now have a fully puppetized gentoo latest box that is configured
+for building binary packages. The packages built within are stored
+in ``vagrant/packages`` so they stay available after the box has been
+destroyed and on subsequent rebuilds.
 
 ## todo
 * [x] install librarian-puppet during veewee phase (see shell/bootstrap.sh)
 * [x] switch logger to syslog-ng from metalog during veewee phase (see manifests/default.pp)
 * [ ] vixie cron support in syslogng puppet module
 * [x] local Veeveefile and templates
+* [ ] inject /etc/puppet/hiera.yaml with vagrant
 * [ ] find a way to force build on missing binpkg
 * [ ] use these on veewee output to find unbuilt packages
 ``
