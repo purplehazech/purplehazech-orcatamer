@@ -25,7 +25,7 @@ veewee vbox export 'gentoo-dev'
 
 
 ## todo
-* [ ] install librarian-puppet during veewee phase (see shell/bootstrap.sh)
+* [x] install librarian-puppet during veewee phase (see shell/bootstrap.sh)
 * [x] switch logger to syslog-ng from metalog during veewee phase (see manifests/default.pp)
 * [ ] vixie cron support in syslogng puppet module
 * [ ] local Veevee Veeveefile and templates
