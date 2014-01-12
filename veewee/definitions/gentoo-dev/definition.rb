@@ -18,9 +18,7 @@ Veewee::Definition.declare({
   :boot_cmd_sequence => [
     '<Wait>' * 2,
     'gentoo-nofb<Enter>',
-    '<Wait>' * 30,
-    '<Enter>',
-    '<Wait>' * 20,
+    '<Wait>' * 40,
     'passwd<Enter><Wait><Wait>',
     'vagrant<Enter><Wait>',
     'vagrant<Enter><Wait>',
