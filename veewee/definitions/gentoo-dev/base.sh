@@ -84,6 +84,8 @@ USE="nls cjk unicode"
 PYTHON_TARGETS="python2_7 python3_2 python3_3"
 USE_PYTHON="3.2 2.7"
 
+RUBY_TARGETS="ruby18 ruby19 ruby20"
+
 # english only
 LINGUAS="en"
 

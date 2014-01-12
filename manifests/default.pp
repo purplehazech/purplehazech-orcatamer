@@ -51,6 +51,13 @@ node default {
         '3.2',
         '2.7',
       ];
+    'ruby_targets':
+      ensure  => present,
+      content => [
+        'ruby18',
+        'ruby19',
+        'ruby20',
+      ];
     'linguas':
       ensure  => present,
       content => [
