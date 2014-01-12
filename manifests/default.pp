@@ -63,6 +63,7 @@ node default {
       content => [
         'en',
       ];
+    # these are currently setup for virtualbox support
     'input_devices':
       ensure  => present,
       content => [
