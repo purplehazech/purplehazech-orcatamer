@@ -78,10 +78,13 @@ node default {
         'virtualbox',
       ];
   } ->
-  # install layman since we'll use him anyway
-  package { 'layman':
-    ensure   => present,
-    provider => 'portage',
+  # install most portage tools
+  class { 'portage':
+    eix_ensure           => present,
+    layman_ensure        => present,
+    webapp_config_ensure => present,
+    eselect_ensure       => present,
+    portage_utils_ensure => present
   } ->
   # install ccache since this is a dev/build box
   class { 'ccache':
