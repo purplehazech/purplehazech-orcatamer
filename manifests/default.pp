@@ -13,6 +13,7 @@ node default {
       ensure  => file,
       content => 'version: 2'
   } ->
+  # manage /etc/portage/make.conf
   portage::makeconf {
     'portdir_overlay':
       ensure  => present,
@@ -97,7 +98,7 @@ node default {
       'sudo'      => {},
     },
   } ->
-  # @todo switch veewee box to syslog-ng
+  # remove any other sysloggers (from veewee or stage3)
   service { [ 'metalog', 'rsyslog' ]:
     ensure => stopped,
   } ->
@@ -110,6 +111,7 @@ node default {
       '-minimal'
     ]
   } ->
+  # configure mysql (to be made optional later)
   class { 'mysql':
     root_password => 'auto',
     package       => 'virtual/mysql',
