@@ -13,5 +13,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # run puppet vagrant style
   config.vm.provision "puppet" do |puppet|
     puppet.module_path = "modules"
+    puppet.options = "--parser future --pluginsync"
   end
 end

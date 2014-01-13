@@ -8,7 +8,10 @@ node default {
     '/vagrant/portage':
       ensure => directory;
     '/vagrant/portage/packages':
-      ensure => directory,
+      ensure => directory;
+    '/etc/puppet/hiera.yaml':
+      ensure  => file,
+      content => 'version: 2'
   } ->
   portage::makeconf {
     'portdir_overlay':
