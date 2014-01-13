@@ -103,7 +103,24 @@ node default {
   } ->
   package { [ 'metalog', 'rsyslog' ]:
     ensure => absent,
+  } ->
+  package_use { 'virtual/mysql':
+    ensure => present,
+    use    => [
+      '-minimal'
+    ]
+  } ->
+  class { 'mysql':
+    root_password => 'auto',
+    package       => 'virtual/mysql',
+    service       => 'mysql',
   }
 
+  # inject mysql_install_db call into example42/mysql module
+  exec { '/usr/bin/mysql_install_db':
+    require => Package['mysql'],
+    before  => Service['mysql'],
+    creates => '/var/lib/mysql/mysql'
+  }
 
 }

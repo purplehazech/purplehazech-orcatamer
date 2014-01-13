@@ -7,6 +7,8 @@ mod "puppetlabs/stdlib"
 mod "gentoo/portage"
 mod "purplehazech/ccache"
 mod "purplehazech/syslogng"
+# my dev boxes usually have mysql involved at some point
+mod "example42/mysql"
 
 # system under development
 mod "zabbix",
