@@ -77,7 +77,8 @@ node default {
       content => [
         'virtualbox',
       ];
-  } ->
+  } -> Class['ccache']
+
   # install most portage tools
   class { 'portage':
     eix_ensure           => present,
