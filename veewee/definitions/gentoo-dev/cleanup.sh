@@ -23,5 +23,6 @@ rm /etc/profile.d/settings.sh
 
 # clean root
 rm -rf /root/.gem
+rm -rf /root/.bash_history
 #rm -rf /root/*
 DATAEOF
