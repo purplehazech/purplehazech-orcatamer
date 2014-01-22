@@ -7,12 +7,22 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "gentoo-dev"
 
-  # install and runn librarian-puppet
-  config.vm.provision :shell, :path => "shell/bootstrap.sh"
+  # install puppetmaster using puppet apply
+  config.vm.define "puppetmaster" do |puppetmaster|
 
-  # run puppet vagrant style
-  config.vm.provision "puppet" do |puppet|
-    puppet.module_path = "modules"
-    puppet.options = "--parser future --pluginsync"
+    # install and run librarian-puppet
+    puppetmaster.vm.provision :shell, :path => "shell/bootstrap.sh"
+
+    # run puppet vagrant style
+    puppetmaster.vm.provision "puppet" do |puppet|
+      puppet.module_path = "modules"
+      puppet.options = "--parser future --pluginsync"
+      puppet.manifest_file = "puppetmaster.pp"
+    end
+
+  end
+
+  config.vm.define "binhost" do |binhost|
+      binhost.puppet.manifest_file = "binhost.pp"
   end
 end
