@@ -105,6 +105,10 @@ node default {
   package { [ 'metalog', 'rsyslog' ]:
     ensure => absent,
   } ->
+  # workaround for missing storeconfigs
+  file { '/etc/puppet/zabbix.api.yaml':
+    ensure => file
+  } ->
   package_use { 'virtual/mysql':
     ensure => present,
     use    => [
@@ -117,12 +121,17 @@ node default {
     package       => 'virtual/mysql',
     service       => 'mysql',
   } ->
+  class { '::ntp':
+  #} ->
+  # install a zabbix agent (also pulls server install?)
+  #class { 'zabbix::agent':
+  #  server  => 'localhost'
+  #} ->
   # install a zabbix server
-  class { 'zabbix::server':
-    ensure      => present,
-    db_user     => 'zabbix',
-    db_password => 'zabbix',
-    db_server   => 'localhost',
+  #class { 'zabbix::server':
+  #  db_user     => 'zabbix',
+  #  db_password => 'zabbix',
+  #  db_server   => 'localhost',
   }
 
   # inject mysql_install_db call into example42/mysql module
