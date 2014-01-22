@@ -22,7 +22,8 @@ Veewee::Definition.declare({
     'passwd<Enter><Wait><Wait>',
     'vagrant<Enter><Wait>',
     'vagrant<Enter><Wait>',
-    '/etc/init.d/sshd start<Enter>'
+    '/etc/init.d/sshd start<Enter>',
+    'watch ps af'
   ],
   :kickstart_port    => '7122',
   :kickstart_timeout => 10000,
