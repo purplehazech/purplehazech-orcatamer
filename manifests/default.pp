@@ -116,13 +116,6 @@ node default {
     root_password => 'auto',
     package       => 'virtual/mysql',
     service       => 'mysql',
-  } ->
-  # install a zabbix server
-  class { 'zabbix::server':
-    ensure      => present,
-    db_user     => 'zabbix',
-    db_password => 'zabbix',
-    db_server   => 'localhost',
   }
 
   # inject mysql_install_db call into example42/mysql module
