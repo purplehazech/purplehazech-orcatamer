@@ -10,6 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # install puppetmaster using puppet apply
   config.vm.define "puppet" do |puppet|
 
+    puppet.vm.hostname = "puppet"
+
     # install and run librarian-puppet
     puppet.vm.provision :shell, :path => "shell/bootstrap.sh"
 
@@ -17,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
       puppet.options = "--parser future --pluginsync"
-      puppet.manifest_file = "puppetmaster.pp"
+      puppet.manifest_file = "puppet.pp"
     end
 
   end
