@@ -8,13 +8,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "gentoo-dev"
 
   # install puppetmaster using puppet apply
-  config.vm.define "puppetmaster" do |puppetmaster|
+  config.vm.define "puppet" do |puppet|
 
     # install and run librarian-puppet
-    puppetmaster.vm.provision :shell, :path => "shell/bootstrap.sh"
+    puppet.vm.provision :shell, :path => "shell/bootstrap.sh"
 
     # run puppet vagrant style
-    puppetmaster.vm.provision "puppet" do |puppet|
+    puppet.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
       puppet.options = "--parser future --pluginsync"
       puppet.manifest_file = "puppetmaster.pp"
