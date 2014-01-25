@@ -1,14 +1,15 @@
 #!/bin/bash
 source /etc/profile
 
-# install eix as a dep to puppet
+# install puppet deps
 chroot "$chroot" /bin/bash <<DATAEOF
-emerge app-portage/eix app-admin/eselect -1k
+echo '=dev-ruby/rgen-0.6.6 ~amd64' >> /etc/portage/package.accept_keywords/default
+emerge app-portage/eix app-admin/eselect dev-ruby/rgen -1k
 DATAEOF
 
 # install Puppet
 chroot "$chroot" /bin/bash <<DATAEOF
-echo '=app-admin/augeas-1.1.0 ~amd64' > /etc/portage/package.keywords/default
+echo '=app-admin/augeas-1.1.0 ~amd64' >> /etc/portage/package.accept_keywords/default
 echo 'version: 2' > /etc/puppet/hiera.yaml
 USE="augeas diff doc shadow vim-syntax" emerge app-admin/puppet -1k
 DATAEOF
