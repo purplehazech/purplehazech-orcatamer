@@ -193,6 +193,23 @@ class profile::puppet::master {
   ]:
     ensure => present,
   } ->
+  file { [
+    '/var/run/puppetdb',
+    '/var/lib/puppetdb/state',
+    '/var/lib/puppetdb/db',
+    '/var/lib/puppetdb/config',
+    '/var/lib/puppetdb/mq',
+  ]:
+    ensure => directory,
+    owner  => 'puppetdb',
+  } ->
+  file { '/etc/puppetdb/conf.d':
+    ensure => directory,
+    mode   => '0755',
+  } ->
+  file { '/etc/puppetdb/log4j.properties':
+    ensure => file,
+    mode   => '0644',
   } ->
   service { 'puppetdb':
     ensure => running,
