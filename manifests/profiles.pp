@@ -113,6 +113,18 @@ class profile::system {
   package { [ 'metalog', 'rsyslog' ]:
     ensure => absent,
   }
+
+  # setup augeas 1.x
+  package_keywords { 'app-admin/augeas':
+    ensure   => present,
+    keywords => [
+      '~amd64',
+    ],
+    version  => '1.1.0'
+  } ~>
+  package { 'app-admin/augeas':
+    ensure => installed,
+  }
 }
 
 class profile::puppet::master {

@@ -8,6 +8,7 @@ DATAEOF
 
 # install Puppet
 chroot "$chroot" /bin/bash <<DATAEOF
+echo '=app-admin/augeas-1.1.0 ~amd64' > /etc/portage/package.keywords/default
 USE="augeas diff doc shadow vim-syntax" emerge app-admin/puppet -va
 DATAEOF
 
