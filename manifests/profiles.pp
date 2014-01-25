@@ -210,8 +210,8 @@ class profile::puppet::master {
       context => '/files/etc/puppet/puppet.conf/main',
       changes => [
         'set modulepath /vagrant/modules',
-        'set manifestdir /vagrant/manifest',
-        'set manifest /vagrant/manifest/all.pp',
+        'set manifestdir /vagrant/manifests',
+        'set manifest /vagrant/manifests/all.pp',
         'set pluginsync true',
         'set parser future',
       ];
