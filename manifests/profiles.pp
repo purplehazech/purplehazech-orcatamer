@@ -13,7 +13,8 @@ class profile::system {
       ensure => directory;
     '/etc/puppet/hiera.yaml':
       ensure  => file,
-      content => 'version: 2'
+      content => 'version: 2',
+      mode    => '0744',
   } ->
   # manage /etc/portage/make.conf
   portage::makeconf {
