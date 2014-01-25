@@ -8,7 +8,7 @@ DATAEOF
 
 # install Puppet
 chroot "$chroot" /bin/bash <<DATAEOF
-gem install puppet --no-rdoc --no-ri
+USE="augeas diff doc shadow vim-syntax" emerge app-admin/puppet -va
 DATAEOF
 
 # install librarian-puppet (currently from git so install works)
