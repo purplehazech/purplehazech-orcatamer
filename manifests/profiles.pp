@@ -164,11 +164,6 @@ class profile::puppet::master {
       command => "/usr/bin/layman-add rabe git ${rabe_overlay}",
       creates => '/var/lib/layman/rabe',
   } ->
-  layman {
-    'optiz0r':
-      ensure => present;
-    'rabe':
-      ensure => present;
   exec { 'sync-eix-for-puppetdb':
     command     => '/usr/bin/eix-update',
     refreshonly => true,
