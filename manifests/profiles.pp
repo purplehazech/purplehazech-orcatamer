@@ -218,7 +218,14 @@ class profile::puppet::master {
         'set dbpassword vagrant',
         'set dbserver localhost'
       ];
-  } ->
+    'puppetdb jetty config':
+      context => '/files/etc/puppetdb/conf.d/jetty.ini/jetty',
+      lens    => 'Puppet.lns',
+      incl    => '/etc/puppetdb/conf.d/jetty.ini',
+      changes => [
+        'set host 0.0.0.0',
+      ];
+  } ~>
   service { 'puppetmaster':
     ensure => running,
     enable => true,
