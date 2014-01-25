@@ -6,6 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "gentoo-dev"
+  config.vm.box_url = "http://bindist.hairmare.ch/gentoo-dev/gentoo-dev.box"
 
   # install puppetmaster using puppet apply
   config.vm.define "puppet" do |puppet|
