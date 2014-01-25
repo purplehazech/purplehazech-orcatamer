@@ -23,13 +23,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file = "init.pp"
     end
 
+    box.vm.network "private_network", ip: "10.30.0.10"
   end
 
-  config.vm.define "binhost" do |binhost|
-      binhost.vm.hostname = "binhost.vagrant.local"
+  config.vm.define "binhost" do |box|
+      box.vm.hostname = "binhost.vagrant.local"
 
-      binhost.puppet.vm.provision "puppet_server" do |puppet|
-      	puppet.options = "--parser future --pluginsync --verbose --debug"
+      box.vm.provision "puppet_server" do |puppet|
+      	puppet.options = "--parser future --pluginsync"
       end
   end
 end
