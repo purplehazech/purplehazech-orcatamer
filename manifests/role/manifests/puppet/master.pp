@@ -6,6 +6,4 @@ class role::puppet::master {
   Class['::profile::puppet::master']
 }
 
-class role::infra::binhost {
-  include ::profile::system
-}
+
