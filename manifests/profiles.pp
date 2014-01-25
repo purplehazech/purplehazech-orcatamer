@@ -86,17 +86,11 @@ class profile::system {
       ];
   } -> Class['ccache']
 
-  # bump eix due to bugs with --format '<bestversion:LASTVERSION>' in 0.29.0
-  package_keywords { '=app-portage/eix-0.30.0':
-    ensure   => present,
-    keywords => [
-      '~amd64'
-    ],
-    #notify   => Package['eix'],
-  } ->
   # install most portage tools
   class { 'portage':
-    eix_ensure           => present,
+    # bump eix due to bugs with --format '<bestversion:LASTVERSION>' in 0.29.0
+    eix_ensure           => '0.30.0',
+    eix_keywords         => ['~amd64'],
     layman_ensure        => present,
     webapp_config_ensure => present,
     eselect_ensure       => present,
