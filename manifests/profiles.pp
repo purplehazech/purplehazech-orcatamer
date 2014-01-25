@@ -230,6 +230,12 @@ class profile::puppet::master {
       changes => [
         "set server ${::fqdn}",
       ];
+    'puppetdb routes config':
+      context => '/files/etc/puppet/routes.yaml/master/facts',
+      changes => [
+        'set terminus puppetdb',
+        'set cache yaml',
+      ];
     'puppetdb jetty config':
       context => '/files/etc/puppetdb/conf.d/jetty.ini/jetty',
       lens    => 'Puppet.lns',
