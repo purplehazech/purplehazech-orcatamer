@@ -10,7 +10,7 @@ DATAEOF
 chroot "$chroot" /bin/bash <<DATAEOF
 echo '=app-admin/augeas-1.1.0 ~amd64' > /etc/portage/package.keywords/default
 echo 'version: 2' > /etc/puppet/hiera.yaml
-USE="augeas diff doc shadow vim-syntax" emerge app-admin/puppet -va
+USE="augeas diff doc shadow vim-syntax" emerge app-admin/puppet -1k
 DATAEOF
 
 # install librarian-puppet (currently from git so install works)
