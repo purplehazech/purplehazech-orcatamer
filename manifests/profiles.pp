@@ -104,7 +104,8 @@ class profile::system {
   } ->
   exec { 'sync-layman':
     command     => '/usr/bin/layman -S',
-    refreshonly => true
+    refreshonly => true,
+    subscribe   => Package['app-portage/layman'],
   } ->
   # install ccache since these are dev/build boxes
   class { 'ccache':
@@ -168,7 +169,7 @@ class profile::puppet::master {
     'layman-add-rabe-overlay':
       command => "/usr/bin/layman-add rabe git ${rabe_overlay}",
       creates => '/var/lib/layman/rabe',
-  } ->
+  } ~>
   exec { 'sync-eix-for-puppetdb':
     command     => '/usr/bin/eix-update',
     refreshonly => true,
@@ -184,7 +185,7 @@ class profile::puppet::master {
       use    => [
         'cups',
       ];
-  }
+  } ->
   package_keywords { [
     'app-admin/puppetdb',
     'dev-lang/leiningen',
@@ -272,7 +273,8 @@ class profile::puppet::master {
       incl    => '/etc/puppetdb/conf.d/jetty.ini',
       changes => [
         'set host 0.0.0.0',
-      ];
+      ],
+      require => Package['app-admin/puppetdb'];
   } ~>
   service { 'puppetmaster':
     ensure => running,
