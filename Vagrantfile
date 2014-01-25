@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # install puppetmaster using puppet apply
   config.vm.define "puppet" do |puppet|
 
-    puppet.vm.hostname = "puppet"
+    puppet.vm.hostname = "puppet.vagrant.local"
 
     # install and run librarian-puppet
     puppet.vm.provision :shell, :path => "shell/bootstrap.sh"
@@ -25,6 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "binhost" do |binhost|
+      binhost.vm.hostname = "binhost.vagrant.local"
+
       binhost.puppet.vm.provision "puppet_server" do |puppet|
       	puppet.options = "--parser future --pluginsync --verbose --debug"
       end
