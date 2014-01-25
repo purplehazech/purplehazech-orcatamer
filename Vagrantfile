@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
       puppet.options = "--parser future --pluginsync"
-      puppet.manifest_file = "nodes/init.pp"
+      puppet.manifest_file = "init.pp"
     end
 
   end
