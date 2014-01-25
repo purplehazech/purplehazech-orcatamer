@@ -47,7 +47,9 @@ class profile::system {
       content => '/vagrant/portage/packages';
     'portage_binhost':
       ensure  => present,
-      content => 'http://bindist.hairmare.ch/gentoo-dev/portage/packages/';
+      content => [
+        'http://bindist.hairmare.ch/gentoo-dev/portage/packages/',
+      ];
     'python_targets':
       ensure  => present,
       content => [
