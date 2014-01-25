@@ -193,12 +193,6 @@ class profile::puppet::master {
   ]:
     ensure => present,
   } ->
-  exec { 'puppetdb-ssl-setup':
-    command => '/usr/sbin/puppetdb-ssl-setup',
-    creates => [
-      '/etc/puppet/ssl/certs/ca.pem',
-      '/etc/puppet/ssl/certs/puppet.vagrant.local.pem',
-    ]
   } ->
   service { 'puppetdb':
     ensure => running,
@@ -261,6 +255,14 @@ class profile::puppet::master {
   service { 'puppetmaster':
     ensure => running,
     enable => true,
+  } ->
+  exec { 'puppetdb-ssl-setup':
+    command => '/usr/sbin/puppetdb-ssl-setup',
+    creates => [
+      '/etc/puppet/ssl/certs/ca.pem',
+      '/etc/puppet/ssl/certs/puppet.vagrant.local.pem',
+    ],
+    notify  => Service['puppetdb'],
   #} ->
   #service { 'puppet':
   #  ensure => running,
