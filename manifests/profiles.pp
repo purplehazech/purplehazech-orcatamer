@@ -97,6 +97,10 @@ class profile::system {
     eselect_ensure       => present,
     portage_utils_ensure => present
   } ->
+  exec { 'sync-layman':
+    command     => '/usr/bin/layman -S',
+    refreshonly => true
+  } ->
   # install ccache since these are dev/build boxes
   class { 'ccache':
   } ->
@@ -139,6 +143,10 @@ class profile::puppet::master {
     'betagarden':
       ensure => present,
   } ->
+  exec { 'sync-eix-for-betagarden':
+    command     => '/usr/bin/eix-update',
+    refreshonly => true,
+  } ->
   package_keywords { 'app-portage/layman-add':
     ensure   => 'present',
     keywords => '~amd64',
@@ -161,6 +169,9 @@ class profile::puppet::master {
       ensure => present;
     'rabe':
       ensure => present;
+  exec { 'sync-eix-for-puppetdb':
+    command     => '/usr/bin/eix-update',
+    refreshonly => true,
   } ->
   package_keywords { [
     'app-admin/puppetdb',
