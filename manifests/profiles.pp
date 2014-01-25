@@ -275,12 +275,19 @@ class profile::puppet::master {
   service { 'puppetmaster':
     ensure => running,
     enable => true,
+  }
+  Service['puppetmaster'] -> Exec['puppetdb-ssl-setup']
+
+  exec { 'run-puppet-agent-once':
+    command     => '/usr/bin/puppet agent --test --noop',
+    refreshonly => true
   } ->
   exec { 'puppetdb-ssl-setup':
     command => '/usr/sbin/puppetdb-ssl-setup',
     creates => [
-      '/etc/puppet/ssl/certs/ca.pem',
-      '/etc/puppet/ssl/certs/puppet.vagrant.local.pem',
+      '/etc/puppetdb/ssl/ca.pem',
+      '/etc/puppetdb/ssl/private.pem',
+      '/etc/puppetdb/ssl/public.pem',
     ],
     notify  => Service['puppetdb'],
   #} ->
