@@ -173,7 +173,7 @@ class profile::puppet::master {
     use    => '-X',
   } ->
   package { [
-    'closure',
+    'dev-lang/clojure',
     'app-admin/puppetdb'
   ]:
     ensure => present,
