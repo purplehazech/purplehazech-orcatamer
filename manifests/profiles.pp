@@ -213,17 +213,21 @@ class profile::puppet::master {
         'set manifest /vagrant/manifest/all.pp',
         'set pluginsync true',
         'set parser future',
-     ];
+      ];
     'puppet master setup':
       context => '/files/etc/puppet/puppet.conf/master',
       changes => [
         "set server ${::fqdn}",
-        'set reports store',
+        'set reports store,puppetdb',
         'set storeconfigs true',
-        'set dbadapter mysql',
-        'set dbuser puppet',
-        'set dbpassword vagrant',
-        'set dbserver localhost'
+        'set storeconfigs_backend puppetdb',
+      ];
+    'puppetdb puppet config':
+      context => '/files/etc/puppet/puppetdb.conf/main',
+      lens    => 'Puppet.lns',
+      incl    => '/etc/puppet/puppetdb.conf',
+      changes => [
+        "set server ${::fqdn}",
       ];
     'puppetdb jetty config':
       context => '/files/etc/puppetdb/conf.d/jetty.ini/jetty',
