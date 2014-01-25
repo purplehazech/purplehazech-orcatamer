@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
       puppet.options = "--parser future --pluginsync"
-      puppet.manifest_file = "init.pp"
+      puppet.manifest_file = "site.pp"
     end
 
     puppet.vm.network "private_network", ip: "10.30.0.10"

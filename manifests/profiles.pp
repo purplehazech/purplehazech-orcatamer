@@ -242,7 +242,7 @@ class profile::puppet::master {
       changes => [
         'set modulepath /vagrant/modules',
         'set manifestdir /vagrant/manifests',
-        'set manifest /vagrant/manifests/all.pp',
+        'set manifest /vagrant/manifests/site.pp',
         'set pluginsync true',
         'set parser future',
       ];
