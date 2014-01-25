@@ -44,7 +44,7 @@ destroyed and on subsequent rebuilds.
 * [x] switch logger to syslog-ng from metalog during veewee phase (see manifests/default.pp)
 * [ ] vixie cron support in syslogng puppet module
 * [x] local Veeveefile and templates
-* [ ] inject /etc/puppet/hiera.yaml with vagrant
+* [x] inject /etc/puppet/hiera.yaml with vagrant
 * [ ] find a way to force build on missing binpkg
 * [ ] use these on veewee output to find unbuilt packages
 ``
