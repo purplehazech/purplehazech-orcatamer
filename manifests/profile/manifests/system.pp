@@ -46,7 +46,6 @@ class profile::system {
     'portage_binhost':
       ensure  => present,
       content => [
-        'http://192.168.1.150/portage/portage/packages/',
         'http://bindist.hairmare.ch/gentoo-dev/portage/packages/',
       ];
     'python_targets':
