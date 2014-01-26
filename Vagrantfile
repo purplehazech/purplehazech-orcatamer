@@ -29,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "binhost" do |box|
       box.vm.hostname = "binhost.vagrant.local"
 
+      box.vm.provision :shell, :path => "shell/puppethost.sh"
       box.vm.provision "puppet_server" do |puppet|
       	puppet.options = "--parser future --pluginsync"
       end
