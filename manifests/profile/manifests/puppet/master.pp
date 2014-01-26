@@ -122,10 +122,16 @@ class profile::puppet::master {
       '127.0.0.1:9090',
     ]
   } ->
+  file { '/var/www/puppet.vagrant.local':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'nobody',
+    mode   => '0766',
+  } ->
   nginx::resource::vhost { 'puppet.vagrant.local' :
     listen_ip          => '0.0.0.0',
     default_server     => true,
-    www_root           => '/',
+    www_root           => '/var/www/puppet.vagrant.local',
     template_directory => '/vagrant/manifests/profile/templates/puppet/nginx_location.conf.erb',
   } ->
   group { 'puppetboard':
@@ -154,13 +160,18 @@ class profile::puppet::master {
       "set UWSGI_EXTRA_OPTIONS '\"--http 127.0.0.1:9090 --uwsgi-socket 127.0.0.1:9091 --plugin python27 --wsgi-file ${wsgi_script}\"'",
     ]
   } ->
+  file { $wsgi_script:
+    ensure  => file,
+    content => 'from puppetboard.app import app as application',
+    mode    => '0644',
+  } ->
   file { '/etc/init.d/uwsgi.puppetboard':
     ensure => link,
     target => '/etc/init.d/uwsgi',
   } ->
-  file { $wsgi_script:
-    ensure  => file,
-    content => 'from puppetboard.app import app as application',
+  service { 'uwsgi.puppetboard':
+    ensure => running,
+    enable => true
   }
 
   # puppetmaster
