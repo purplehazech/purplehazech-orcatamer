@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     puppet.vm.network "private_network", ip: "10.30.0.10", virtualbox__intnet: "vagrant.local"
+    config.vm.network "forwarded_port", guest: 80, host: 8080
   end
 
   config.vm.define "binhost" do |box|

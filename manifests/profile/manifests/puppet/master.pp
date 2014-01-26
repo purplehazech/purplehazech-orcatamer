@@ -1,5 +1,16 @@
-# = Class: profile::puppet::master
+# # Class: profile::puppet::master
 #
+# Contains the run book for installing a complete puppetmaster setup on
+# a current gentoo node. Since this run book uses some highly experimental
+# tooling it will not run on any platform other than gentoo anytime soon.
+#
+# The largest problems with this run book are as follows.
+# * puppetdb is installed from binaries using leiningen
+# * puppetboard is installed using pip
+# * it should use postgresql as intended by puppetdb
+#
+# The rest of the run book is ready to be installed from binaries, so
+# at least its got that going.
 #
 class profile::puppet::master {
 
