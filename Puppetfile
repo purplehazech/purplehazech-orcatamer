@@ -10,6 +10,8 @@ mod "purplehazech/ccache"
 mod "purplehazech/syslogng"
 # my dev boxes usually have mysql involved at some point
 mod "example42/mysql"
+# we need nginx for some webserver needs
+mod "example42/nginx"
 
 # system under development (this is currently being worked on)
 mod "zabbix",

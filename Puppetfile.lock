@@ -1,0 +1,34 @@
+FORGE
+  remote: http://forge.puppetlabs.com
+  specs:
+    example42/mysql (2.1.1)
+      example42/puppi (>= 2.0.0)
+    example42/nginx (2.1.2)
+      example42/puppi (>= 2.0.0)
+      puppetlabs/concat (>= 1.0.0)
+    example42/puppi (2.1.7)
+    gentoo/portage (2.2.0-rc1)
+      puppetlabs/concat (~> 1.0.0)
+    puppetlabs/concat (1.0.0)
+    puppetlabs/stdlib (4.1.0)
+    purplehazech/ccache (0.1.0)
+    purplehazech/syslogng (0.3.0)
+      puppetlabs/stdlib (~> 4.0)
+
+GIT
+  remote: git://github.com/purplehazech/puppet-zabbix.git
+  ref: feature/gentoo-cleanup
+  sha: 6fe68b267aa56dbf779382870fc6899b8119cdad
+  specs:
+    zabbix (0.0.2)
+      example42/mysql (>= 2.1.1)
+      puppetlabs/stdlib (>= 3.2.0)
+
+DEPENDENCIES
+  example42/mysql (>= 0)
+  example42/nginx (>= 0)
+  gentoo/portage (>= 0)
+  purplehazech/ccache (>= 0)
+  purplehazech/syslogng (>= 0)
+  zabbix (>= 0)
+

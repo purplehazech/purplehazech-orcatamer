@@ -78,8 +78,13 @@ CXXFLAGS="\${CFLAGS}"
 ACCEPT_KEYWORDS="$accept_keywords"
 MAKEOPTS="-j$((1 + $nr_cpus)) -l$nr_cpus.5"
 EMERGE_DEFAULT_OPTS="-j$nr_cpus --quiet-build=y"
-FEATURES="\${FEATURES} parallel-fetch"
+FEATURES="\${FEATURES} parallel-fetch getbinpkg"
 USE="nls cjk unicode"
+
+# non existing in veewee?
+#PKGDIR="/vagrant/portage/packages"
+# add local mirror here for more speed if you want to
+PORTAGE_BINHOST="http://bindist.hairmare.ch/gentoo-dev/portage/packages/"
 
 PYTHON_TARGETS="python2_7 python3_2 python3_3"
 USE_PYTHON="3.2 2.7"
