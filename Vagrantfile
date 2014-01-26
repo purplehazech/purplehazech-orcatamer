@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file = "site.pp"
     end
 
-    puppet.vm.network "private_network", ip: "10.30.0.10"
+    puppet.vm.network "private_network", ip: "10.30.0.10", virtualbox__intnet: "vagrant.local"
   end
 
   config.vm.define "binhost" do |box|
@@ -33,6 +33,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       	puppet.options = "--parser future --pluginsync"
       end
 
-      box.vm.network "private_network", ip: "10.30.0.20"
+      box.vm.network "private_network", ip: "10.30.0.20", virtualbox__intnet: "vagrant.local"
   end
 end
