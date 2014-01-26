@@ -85,6 +85,84 @@ class profile::puppet::master {
     enable => true
   }
 
+  # puppetboard
+  $www_root        = '/var/www/puppet.vagrant.local/'
+  $settings_file   = '/var/www/puppet.vagrant.local/settings.py'
+  $wsgi_script     = '/var/www/puppet.vagrant.local/wsgi.py'
+  $puppetboard_dir = '/usr/lib64/python2.7/site-packages/puppetboard/'
+  $settings_tpl    = "${puppetboard_dir}/default_settings.py"
+  package { 'dev-python/pip':
+    ensure  => present,
+    require => Service['puppetdb']
+  } ->
+  package { 'www-servers/nginx':
+    ensure => present,
+  } ->
+  portage::package { 'www-servers/uwsgi':
+    ensure   => present,
+    use      => [
+      'python',
+    ],
+    keywords => [
+      '~amd64',
+    ],
+  } ->
+  exec { 'pip-install-puppetboard':
+    command => '/usr/bin/python2.7 /usr/lib64/python2.7/site-packages/pip/__init__.py install puppetboard',
+    creates => $puppetboard_dir,
+  } ->
+  file { '/etc/nginx/conf.d':
+    ensure => directory
+  } ->
+  class { 'nginx': }
+
+  nginx::resource::upstream { 'puppetboard':
+    ensure  => present,
+    members => [
+      '127.0.0.1:9090',
+    ]
+  } ->
+  nginx::resource::vhost { 'puppet.vagrant.local' :
+    listen_ip          => '0.0.0.0',
+    default_server     => true,
+    www_root           => '/',
+    template_directory => '/vagrant/manifests/profile/templates/puppet/nginx_location.conf.erb',
+  } ->
+  group { 'puppetboard':
+    ensure => present,
+    system => true,
+  } ->
+  user { 'puppetboard':
+    ensure => present,
+    system => true,
+    gid    => 'puppetboard',
+  } ->
+  file { '/var/log/puppetboard/':
+    ensure => directory,
+    owner  => 'puppetboard',
+    group  => 'puppetboard',
+  } ->
+  augeas { 'puppetboard-uwsgi':
+    context => '/files/etc/conf.d/uwsgi.puppetboard',
+    lens    => 'Shellvars.lns',
+    incl    => '/etc/conf.d/uwsgi.puppetboard',
+    changes => [
+      'set UWSGI_USER puppetboard',
+      'set UWSGI_GROUP puppetboard',
+      'set UWSGI_LOG_FILE /var/log/puppetboard/uwsgi.log',
+      'set UWSGI_DIR /var/www/puppet.vagrant.local',
+      "set UWSGI_EXTRA_OPTIONS '\"--http 127.0.0.1:9090 --uwsgi-socket 127.0.0.1:9091 --plugin python27 --wsgi-file ${wsgi_script}\"'",
+    ]
+  } ->
+  file { '/etc/init.d/uwsgi.puppetboard':
+    ensure => link,
+    target => '/etc/init.d/uwsgi',
+  } ->
+  file { $wsgi_script:
+    ensure  => file,
+    content => 'from puppetboard.app import app as application',
+  }
+
   # puppetmaster
   package_use { 'app-admin/puppet':
     ensure => present,
