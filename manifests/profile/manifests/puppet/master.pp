@@ -11,7 +11,7 @@ class profile::puppet::master {
     # overlay containing layman-add tool
     'betagarden':
       ensure => present,
-  } ->
+  } ~>
   exec { 'sync-eix-for-betagarden':
     command     => '/usr/bin/eix-update',
     refreshonly => true,
