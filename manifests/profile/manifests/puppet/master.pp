@@ -48,18 +48,6 @@ class profile::puppet::master {
     command     => '/usr/bin/eix-update',
     refreshonly => true,
   } ->
-  package_use {
-    'x11-libs/cairo':
-      ensure => present,
-      use    => [
-        'X'
-      ];
-    'app-text/ghostscript-gpl':
-      ensure => present,
-      use    => [
-        'cups',
-      ];
-  } ->
   package_keywords { [
     'app-admin/puppetdb',
     'dev-lang/leiningen',

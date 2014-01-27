@@ -134,4 +134,19 @@ class profile::system {
   package { 'app-admin/augeas':
     ensure => installed,
   }
+
+  # some flags that make more sense here than in puppet or elasticsearch
+  # in the long run they will move though
+  package_use {
+    'x11-libs/cairo':
+      ensure => present,
+      use    => [
+        'X'
+      ];
+    'app-text/ghostscript-gpl':
+      ensure => present,
+      use    => [
+        'cups',
+      ];
+  }
 }
