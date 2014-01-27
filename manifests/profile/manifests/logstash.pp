@@ -37,5 +37,9 @@ class profile::logstash {
   } ~>
   service { 'logstash':
     ensure => running,
+  } ~>
+  exec { 'restart-syslog-ng-after-logstash':
+    command     => '/etc/init.d/syslog-ng restart',
+    refreshonly => true,
   }
 }
