@@ -110,18 +110,22 @@ class profile::system {
   } ->
   class { 'syslogng':
     logpaths     => {
-      'syslog-ng' => {},
-      'sshd'      => {},
-      'sudo'      => {},
+      'syslog-ng'     => {},
+      'sshd'          => {},
+      'sudo'          => {},
+      'puppet-agent'  => {},
+      'puppet-master' => {},
     },
     destinations => {
       '10.30.0.30' => {
-        logpaths => {
-          'syslog-ng' => {},
-          'sshd'      => {},
-          'sudo'      => {},
         type      => 'syslog',
         transport => 'udp',
+        logpaths  => {
+          'syslog-ng'     => {},
+          'sshd'          => {},
+          'sudo'          => {},
+          'puppet_agent'  => {},
+          'puppet_master' => {},
         },
       },
     },
