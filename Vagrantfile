@@ -30,22 +30,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://bindist.hairmare.ch/gentoo-dev/gentoo-dev.box"
 
   # install puppetmaster using puppet apply
-  config.vm.define "puppet" do |puppet|
+  config.vm.define "puppet" do |box|
 
-    puppet.vm.hostname = "puppet.vagrant.local"
+    box.vm.hostname = "puppet.vagrant.local"
 
     # install and run librarian-puppet
-    puppet.vm.provision :shell, :path => "shell/bootstrap.sh"
+    box.vm.provision :shell, :path => "shell/bootstrap.sh"
 
     # run puppet vagrant style
-    puppet.vm.provision "puppet" do |puppet|
+    box.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
       puppet.options = PUPPET_EXTRA_OPTIONS
       puppet.manifest_file = "site.pp"
     end
 
-    puppet.vm.network "private_network", ip: "10.30.0.10", virtualbox__intnet: "vagrant.local"
-    config.vm.network "forwarded_port", guest: 80, host: 8080
+    box.vm.network "private_network", ip: "10.30.0.10", virtualbox__intnet: "vagrant.local"
+    box.vm.network "forwarded_port", guest: 80, host: 8080
   end
 
   # basic featureless binary system
