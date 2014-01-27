@@ -1,15 +1,44 @@
-# gentoo-dev
+# orca-tamer
 
-Contains my personal development setup I use for developing
-gentoo related things. For now this only has 64bit support.
+The orca tamer is a gentoo penguin from the clan of the
+warrior penguins. Even in the eye of danger he persists
+until finally forging an allegiance with local researchers
+on the lookout thus saving himself from the maddingly vast
+hordes of hungry orcas.
 
-## lifecycle of a box
+When the orca tamer got into GNU/Linux he decided that he
+needed a stable(ish) base setup based upon the foundations
+of Gentoo Linux but with added binary packaging and tools
+for automating all the things.
+
+At the moment orca tamer can start to get you developing
+puppet manifests for gentoo in a short time. For now this
+only has 64bit support.
+
+Some binary packages are already available for the system.
+Please consider those proof of concept only, I will stop
+offering those until orca tamer has stabilzed soon(ish).
+
+This needs heaps of work, please create issues and send
+pull requests. You can also use the github comment feature
+if you don't grok a commit of mine, I'll be happy to clarify
+and document where there are issues.
+
+## Lifecycle of a Box
 
 * box gets built from stage3 with veewee using binary packages
 * box gets exported as vagrant box
 * box gets imported in vagrant
 * box is used to provision a complete environment using vagrant
 * provisioned environment is used to build binary packages and stage3 boxes
+
+## Available Boxes
+
+| Machine      | IP (vbox internal network) | exposed ports                              | description 
+| ------------ | -------------------------- | ------------------------------------------ | -----------
+| puppet       | 10.30.0.10                 | 8080 -> puppetboard                        | Primary puppet master. Must always run first since it is used to bootstrap the remaining machines.
+| binhost      | 10.30.0.20                 |                                            | Bare Linux install with the ``::profile::system`` profile.
+| logstash     | 10.30.0.30                 | 8081 -> logstash, 9200 -> elasticsearch    | Central logfile aggregation and parsing, made awesome with logstash and syslog-ng.
 
 ## Quickstart
 
@@ -109,7 +138,10 @@ destroyed and on subsequent rebuilds.
 * [ ] refactor docs to make veewee less important
 * [ ] split ``manifests/{profile,role}`` into their own modules
 * [ ] find a way to force build on missing binpkg
-* [ ] use these on veewee output to find unbuilt packages
+* [ ] create veewee machine
+* [ ] manage /etc/hosts and switch to hostnames where ips are in use (only in ``::profile`` afaik)
+* [ ] refactor veewee build to install puppet right away and only use puppet thereafter
+* [ ] use these (with logstash) on veewee output to find unbuilt packages
 ``
   />>> .* (. of .) /
   /^\(=.*\)$/

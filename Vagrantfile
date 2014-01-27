@@ -1,5 +1,23 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+#
+#  ▒█████   ██▀███   ▄████▄   ▄▄▄         ▄▄▄█████▓ ▄▄▄       ███▄ ▄███▓▓█████  ██▀███  
+# ▒██▒  ██▒▓██ ▒ ██▒▒██▀ ▀█  ▒████▄       ▓  ██▒ ▓▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀ ▓██ ▒ ██▒
+# ▒██░  ██▒▓██ ░▄█ ▒▒▓█    ▄ ▒██  ▀█▄     ▒ ▓██░ ▒░▒██  ▀█▄  ▓██    ▓██░▒███   ▓██ ░▄█ ▒
+# ▒██   ██░▒██▀▀█▄  ▒▓▓▄ ▄██▒░██▄▄▄▄██    ░ ▓██▓ ░ ░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄ ▒██▀▀█▄  
+# ░ ████▓▒░░██▓ ▒██▒▒ ▓███▀ ░ ▓█   ▓██▒     ▒██▒ ░  ▓█   ▓██▒▒██▒   ░██▒░▒████▒░██▓ ▒██▒
+# ░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒▒   ▓▒█░     ▒ ░░    ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░
+#   ░ ▒ ▒░   ░▒ ░ ▒░  ░  ▒     ▒   ▒▒ ░       ░      ▒   ▒▒ ░░  ░      ░ ░ ░  ░  ░▒ ░ ▒░
+# ░ ░ ░ ▒    ░░   ░ ░          ░   ▒        ░        ░   ▒   ░      ░      ░     ░░   ░ 
+#     ░ ░     ░     ░ ░            ░  ░                  ░  ░       ░      ░  ░   ░     
+#                   ░                                                                   
+#
+# ======================================================================================
+#
+#                 MODERN PUPPET INFRASTRUCTURE ON GENTOO WITH STYLE
+#
+# ======================================================================================
+#
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
@@ -27,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "forwarded_port", guest: 80, host: 8080
   end
 
+  # basic featureless binary system
   config.vm.define "binhost" do |box|
       box.vm.hostname = "binhost.vagrant.local"
 
