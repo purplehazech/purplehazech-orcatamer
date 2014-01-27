@@ -116,11 +116,12 @@ class profile::system {
     },
     destinations => {
       '10.30.0.30' => {
-        type     => 'syslog',
         logpaths => {
           'syslog-ng' => {},
           'sshd'      => {},
           'sudo'      => {},
+        type      => 'syslog',
+        transport => 'udp',
         },
       },
     },
