@@ -144,7 +144,7 @@ class profile::system {
     keywords => [
       '~amd64',
     ],
-    version  => '1.1.0'
+    version  => '=1.1.0'
   } ~>
   package { 'app-admin/augeas':
     ensure => installed,
