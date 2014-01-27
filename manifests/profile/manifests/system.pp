@@ -109,10 +109,25 @@ class profile::system {
   class { 'ccache':
   } ->
   class { 'syslogng':
-    logpaths      => {
-      'syslog-ng' => {},
-      'sshd'      => {},
-      'sudo'      => {},
+    logpaths     => {
+      'syslog-ng'     => {},
+      'sshd'          => {},
+      'sudo'          => {},
+      'puppet-agent'  => {},
+      'puppet-master' => {},
+    },
+    destinations => {
+      '10.30.0.30' => {
+        type      => 'syslog',
+        transport => 'udp',
+        logpaths  => {
+          'syslog-ng'     => {},
+          'sshd'          => {},
+          'sudo'          => {},
+          'puppet_agent'  => {},
+          'puppet_master' => {},
+        },
+      },
     },
   } ->
   # remove any other sysloggers (from veewee or stage3)
@@ -129,9 +144,24 @@ class profile::system {
     keywords => [
       '~amd64',
     ],
-    version  => '1.1.0'
+    version  => '=1.1.0'
   } ~>
   package { 'app-admin/augeas':
     ensure => installed,
+  }
+
+  # some flags that make more sense here than in puppet or elasticsearch
+  # in the long run they will move though
+  package_use {
+    'x11-libs/cairo':
+      ensure => present,
+      use    => [
+        'X'
+      ];
+    'app-text/ghostscript-gpl':
+      ensure => present,
+      use    => [
+        'cups',
+      ];
   }
 }
