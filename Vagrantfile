@@ -44,6 +44,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.manifest_file = "site.pp"
     end
 
+    # run puppet in agent mode to finalize install by reporting to puppetdb
+    box.vm.provision "puppet_server" do |puppet|
+      puppet.options = PUPPET_EXTRA_OPTIONS
+    end
+
     box.vm.network "private_network", ip: "10.30.0.10", virtualbox__intnet: "vagrant.local"
     box.vm.network "forwarded_port", guest: 80, host: 8080
   end
