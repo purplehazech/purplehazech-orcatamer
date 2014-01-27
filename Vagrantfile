@@ -78,4 +78,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       box.vm.network "forwarded_port", guest: 8081, host: 9292
       box.vm.network "forwarded_port", guest: 9200, host: 9200
   end
+
+  # mcollective machine
+  config.vm.define "mcollective" do |box|
+      box.vm.hostname = "mcollective.vagrant.local"
+
+      box.vm.provision :shell, :path => "shell/puppethost.sh"
+      box.vm.provision "puppet_server" do |puppet|
+      	puppet.options = PUPPET_EXTRA_OPTIONS
+      end
+
+      box.vm.network "private_network", ip: "10.30.0.40", virtualbox__intnet: "vagrant.local"
+   end
 end
