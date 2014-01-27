@@ -18,22 +18,6 @@ class profile::puppet::master {
   $rabe_overlay = 'git://github.com/purplehazech/rabe-portage-overlay.git'
 
   # puppetdb
-  layman {
-    # overlay containing layman-add tool
-    'betagarden':
-      ensure => present,
-  } ~>
-  exec { 'sync-eix-for-betagarden':
-    command     => '/usr/bin/eix-update',
-    refreshonly => true,
-  } ->
-  package_keywords { 'app-portage/layman-add':
-    ensure   => 'present',
-    keywords => '~amd64',
-  }
-  package { 'app-portage/layman-add':
-    ensure => present,
-  } ->
   exec {
     # overlay with leiningen
     'layman-add-optiz0r-overlay':
