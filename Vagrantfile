@@ -22,6 +22,9 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+# global puppet args
+PUPPET_EXTRA_OPTIONS="--parser future --pluginsync"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "gentoo-dev"
   config.vm.box_url = "http://bindist.hairmare.ch/gentoo-dev/gentoo-dev.box"
@@ -37,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # run puppet vagrant style
     puppet.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
-      puppet.options = "--parser future --pluginsync"
+      puppet.options = PUPPET_EXTRA_OPTIONS
       puppet.manifest_file = "site.pp"
     end
 
@@ -51,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       box.vm.provision :shell, :path => "shell/puppethost.sh"
       box.vm.provision "puppet_server" do |puppet|
-      	puppet.options = "--parser future --pluginsync"
+      	puppet.options = PUPPET_EXTRA_OPTIONS
       end
 
       box.vm.network "private_network", ip: "10.30.0.20", virtualbox__intnet: "vagrant.local"
@@ -63,7 +66,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       box.vm.provision :shell, :path => "shell/puppethost.sh"
       box.vm.provision "puppet_server" do |puppet|
-      	puppet.options = "--parser future --pluginsync"
+      	puppet.options = PUPPET_EXTRA_OPTIONS
       end
 
       box.vm.network "private_network", ip: "10.30.0.30", virtualbox__intnet: "vagrant.local"
