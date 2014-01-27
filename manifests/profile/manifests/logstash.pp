@@ -22,6 +22,11 @@ class profile::logstash {
   package { 'sys-apps/logstash':
     ensure => installed,
   } ->
+  file { '/etc/logstash/conf.d/syslog.conf':
+    ensure => file,
+    source => '/vagrant/manifests/profile/templates/logstash/syslog.conf.erb',
+    notify => Service['logstash'],
+  }
   augeas { 'logstash-confd':
     context => '/files/etc/conf.d/logstash',
     lens    => 'Shellvars.lns',

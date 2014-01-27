@@ -109,10 +109,20 @@ class profile::system {
   class { 'ccache':
   } ->
   class { 'syslogng':
-    logpaths      => {
+    logpaths     => {
       'syslog-ng' => {},
       'sshd'      => {},
       'sudo'      => {},
+    },
+    destinations => {
+      '10.30.0.30' => {
+        type     => 'syslog',
+        logpaths => {
+          'syslog-ng' => {},
+          'sshd'      => {},
+          'sudo'      => {},
+        },
+      },
     },
   } ->
   # remove any other sysloggers (from veewee or stage3)
