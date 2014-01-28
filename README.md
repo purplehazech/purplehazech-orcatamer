@@ -44,10 +44,11 @@ and document where there are issues.
 
 Given you already have a working vagrant/virtualbox install. This should work.
 
-``bash
-git clone ...
+````bash
+git clone https://github.com/purplehazech/purplehazech-orcatamer.git
+cd purplehazech-orcatamer
 vagrant up puppet
-``
+````
 
 You now have a running puppet master instance with puppetdb and puppetboard set
 to go. The puppetboard instance should be available at http://localhost:8080 at
@@ -55,9 +56,9 @@ this point.
 
 You can now start your first puppet agent based machine.
 
-``bash
+````bash
 vagrant up binhost
-``
+````
 
 At some point vagrant will say ``Running provisioner: puppet_server...`` and you
 get to wait until puppet has run on the machine so you can inspect the results
@@ -80,22 +81,22 @@ I use a vagrant install from http://vagrantup.com
 Veewee is used to build from stage3/portage-snapshot to a vagrant
 box.
 
-``bash
+````bash
 # install veewee
 rvm 2.1.0 exec bundle install
 # call veewee like so after install (create an alias)
 rvm 2.1.0 exec bundle exec veewee
-``
+````
 
 ## vagrant usage
 
 After building and exporting a veewee box you can add it to
 vagrant and use it to provision a puppet master.
 
-``bash
+````bash
 vagrant box add gentoo-dev gentoo-dev.box
 vagrant up puppet
-``
+````
 
 If you want to install the full environment run ``vagrant up``
 without a box argument to start all the configured boxes.
@@ -106,21 +107,21 @@ You can use veewee to build base boxes. This repo contains a
 definition for a gentoo box based on the specs that most of
 my machines will have.
 
-``bash
+````bash
 veewee vbox build  'gentoo-dev'
 veewee vbox export 'gentoo-dev'
-``
+````
 
 ## cleanup
 
-``bash
+````bash
 # remove virtual machine built by veewee
 veewee vbox remove gentoo-dev
 # remove all miachines deployed by vagrant
 vagrant destroy
 # remove base bo from vagrant
 vagrant box remove gentoo-dev
-``
+````
 
 ## usage
 
