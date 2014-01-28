@@ -128,6 +128,7 @@ class profile::system {
           'puppet_master' => {},
         },
       },
+      'messages'   => {}
     },
   } ->
   # remove any other sysloggers (from veewee or stage3)
