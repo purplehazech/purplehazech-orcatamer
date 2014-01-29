@@ -20,4 +20,4 @@
 #
 
 name 'purplehazech/orcatamer'
-version '0.0.3-develop'
+version '0.1.0-develop'

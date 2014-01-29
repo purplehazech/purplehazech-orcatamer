@@ -75,7 +75,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
 
       box.vm.network "private_network", ip: "10.30.0.30", virtualbox__intnet: "vagrant.local"
-      box.vm.network "forwarded_port", guest: 8081, host: 9292
+      box.vm.network "forwarded_port", guest: 9292, host: 8081
       box.vm.network "forwarded_port", guest: 9200, host: 9200
   end
 end
