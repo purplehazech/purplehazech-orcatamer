@@ -297,9 +297,9 @@ class profile::puppet::master {
       '/etc/puppetdb/ssl/public.pem',
     ],
     notify  => Service['puppetdb'],
-  #} ->
-  #service { 'puppet':
-  #  ensure => running,
-  #  enable => true,
-  }
+  /*} ->
+  service { 'puppet':
+    ensure => running,
+    enable => true,
+  }*/
 }
