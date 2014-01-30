@@ -24,7 +24,7 @@ class profile::puppet::master {
     'layman-add-optiz0r-overlay':
       command => "/usr/bin/layman-add optiz0r git ${optiz0r_overlay}",
       creates => '/var/lib/layman/optiz0r';
-    # rabe-portage-overlay has a more current puppetdb than optiz0r
+    # * rabe-portage-overlay has a more current puppetdb than optiz0r
     'layman-add-rabe-overlay':
       command => "/usr/bin/layman-add rabe git ${rabe_overlay}",
       creates => '/var/lib/layman/rabe',
