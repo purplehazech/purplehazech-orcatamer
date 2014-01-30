@@ -1,4 +1,4 @@
-# # Class: role::logstash
+# ## Class: role::logstash
 #
 class role::logstash {
   include ::profile::system

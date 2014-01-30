@@ -1,4 +1,4 @@
-# # Node: logstash
+# ## Node: logstash
 #
 node logstash {
   include ::role::logstash

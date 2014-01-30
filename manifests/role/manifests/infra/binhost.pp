@@ -1,4 +1,4 @@
-# = Class: role::infra::binhost
+# ## Class: role::infra::binhost
 #
 # Binary package host.
 #

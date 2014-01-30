@@ -1,4 +1,4 @@
-# # Class: profile::puppet::master
+# ## Class: profile::puppet::master
 #
 # Contains the run book for installing a complete puppetmaster setup on
 # a current gentoo node. Since this run book uses some highly experimental

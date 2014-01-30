@@ -1,4 +1,4 @@
-# # Class: profile::elasticsearch
+# ## Class: profile::elasticsearch
 #
 #
 class profile::elasticsearch {

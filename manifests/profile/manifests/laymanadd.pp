@@ -1,4 +1,4 @@
-# # Class: profile::laymanadd
+# ## Class: profile::laymanadd
 #
 #
 class profile::laymanadd {

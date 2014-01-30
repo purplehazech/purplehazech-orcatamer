@@ -1,4 +1,4 @@
-# # Class: role::puppet::master
+# ## Class: role::puppet::master
 #
 #
 class role::puppet::master {

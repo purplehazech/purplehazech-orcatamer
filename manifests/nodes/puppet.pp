@@ -1,4 +1,4 @@
-# = Node: puppet
+# ## Node: puppet
 #
 # Installs a puppetmaster with puppetdb and puppetboard.
 #

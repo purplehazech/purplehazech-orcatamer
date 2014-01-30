@@ -1,4 +1,4 @@
-# # Class: profile::logstash
+# ## Class: profile::logstash
 #
 #
 class profile::logstash {
