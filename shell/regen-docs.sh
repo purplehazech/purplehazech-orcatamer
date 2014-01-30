@@ -6,7 +6,7 @@ find 	manifests/site.pp \
 	manifests/profile/ \
 	-name '*.pp' \
 	-exec grep '#' {} \; | \
-sed -e 's/[ ]*#//' | \
+sed -e 's/[ ]*# //' | \
 awk '/^#/ {print "\n"} {print $0} ' - \
 > "`dirname $0`/../Puppetdoc.md" && \
 git rev-parse --verify HEAD \
