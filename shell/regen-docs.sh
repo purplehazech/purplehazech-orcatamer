@@ -7,7 +7,25 @@ find 	manifests/site.pp \
 	-name '*.pp' \
 	-exec grep '#' {} \; | \
 sed -e 's/[ ]*# //' | \
-awk '/^#/ {print "\n"} {print $0} ' - \
+awk '
+	/^#/ {
+		print "";
+	}
+	!/^\* / {
+		if (LIST) {
+			print "";
+			LIST="";
+		}
+	}
+	/^\* / {
+		LIST="true";
+	}
+	{
+		print $0;
+	}
+' - | \
+uniq - | \
+sed -e 's/^#//'  \
 > "`dirname $0`/../Puppetdoc.md" && \
 git rev-parse --verify HEAD \
 > "`dirname $0`/../Puppetdoc.lock"
