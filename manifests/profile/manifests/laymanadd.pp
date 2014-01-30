@@ -1,23 +1,28 @@
 # ## Class: profile::laymanadd
 #
+# Add the ``layman-add`` tool to ease layman overlay management.
 #
 class profile::laymanadd {
 
+  # ### layman overlays
   layman {
-    # overlay containing layman-add tool
+    # * betagarden contains the layman-add tool
     'betagarden':
       ensure => present,
   } ~>
+  # we need to sync eix after adding overlays so puppet sees them
   exec { 'sync-eix-for-betagarden':
     command     => '/usr/bin/eix-update',
     refreshonly => true,
   } ->
-  package_keywords { 'app-portage/layman-add':
-    ensure   => 'present',
-    keywords => '~amd64',
-  }
-  package { 'app-portage/layman-add':
-    ensure => present,
+  # ### Packages
+  portage::package {
+    # * layman-add script for adding layman overlays from git and elsewhere
+    'app-portage/layman-add':
+      ensure   => present,
+      keywords => [
+        '~amd64',
+      ]
   }
 
 }

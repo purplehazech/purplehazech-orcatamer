@@ -17,21 +17,26 @@ class profile::puppet::master {
   $optiz0r_overlay = 'git://github.com/optiz0r/gentoo-overlay.git'
   $rabe_overlay = 'git://github.com/purplehazech/rabe-portage-overlay.git'
 
-  # puppetdb
+  # ### PuppetDB
+  # #### Overlays
   exec {
-    # overlay with leiningen
+    # * optiz0r overlay has with leiningen
     'layman-add-optiz0r-overlay':
       command => "/usr/bin/layman-add optiz0r git ${optiz0r_overlay}",
       creates => '/var/lib/layman/optiz0r';
-    # overlay with more current puppetdb than optiz0r
+    # rabe-portage-overlay has a more current puppetdb than optiz0r
     'layman-add-rabe-overlay':
       command => "/usr/bin/layman-add rabe git ${rabe_overlay}",
       creates => '/var/lib/layman/rabe',
   } ~>
-  exec { 'sync-eix-for-puppetdb':
-    command     => '/usr/bin/eix-update',
-    refreshonly => true,
+  exec {
+    # always run eix-sync after using layman-add manually
+    # @todo abstraction for layman-add as puppet-module
+    'sync-eix-for-puppetdb':
+      command     => '/usr/bin/eix-update',
+      refreshonly => true,
   } ->
+  # #### Packages
   package_keywords { [
     'app-admin/puppetdb',
     'dev-lang/leiningen',
@@ -45,6 +50,7 @@ class profile::puppet::master {
   ]:
     ensure => present,
   } ->
+  # #### Configuration
   file { [
     '/var/run/puppetdb',
     '/var/lib/puppetdb/state',
@@ -68,108 +74,152 @@ class profile::puppet::master {
     enable => true
   }
 
-  # puppetboard
+  # ### puppetboard
   $www_root        = '/var/www/puppet.vagrant.local/'
   $settings_file   = '/var/www/puppet.vagrant.local/settings.py'
   $wsgi_script     = '/var/www/puppet.vagrant.local/wsgi.py'
   $puppetboard_dir = '/usr/lib64/python2.7/site-packages/puppetboard/'
   $settings_tpl    = "${puppetboard_dir}/default_settings.py"
-  package { 'dev-python/pip':
-    ensure  => present,
-    require => Service['puppetdb']
+  # #### Packages
+  package {
+    # * pip is used due to puppetboard not being in portage (yet)
+    'dev-python/pip':
+      ensure  => present,
+      require => Service['puppetdb'];
+    # * nginx is used as a webserver since it is small, light and fast
+    'www-servers/nginx':
+      ensure => present,
   } ->
-  package { 'www-servers/nginx':
-    ensure => present,
+  portage::package {
+    # * uwsgi will be used behind nginx as python thread manager
+    'www-servers/uwsgi':
+      ensure   => present,
+      use      => [
+        'python',
+      ],
+      keywords => [
+        '~amd64',
+      ],
   } ->
-  portage::package { 'www-servers/uwsgi':
-    ensure   => present,
-    use      => [
-      'python',
-    ],
-    keywords => [
-      '~amd64',
-    ],
+  # ### Pip Puppetboard Install
+  exec {
+    # Use python2.7 pip to ``pip install puppetboard``.
+    'pip-install-puppetboard':
+      command => '/usr/bin/python2.7 /usr/lib64/python2.7/site-packages/pip/__init__.py install puppetboard',
+      creates => $puppetboard_dir,
   } ->
-  exec { 'pip-install-puppetboard':
-    command => '/usr/bin/python2.7 /usr/lib64/python2.7/site-packages/pip/__init__.py install puppetboard',
-    creates => $puppetboard_dir,
+  file {
+    # Make sure the nginx conf.d support is available.
+    '/etc/nginx/conf.d':
+      ensure => directory
   } ->
-  file { '/etc/nginx/conf.d':
-    ensure => directory
-  } ->
+  # Let external nginx module do its magic.
   class { 'nginx': } ->
-  exec { 'nginx-add-conf.d':
-    command => '/bin/sed --in-place -e "s@include /etc/nginx/mime.types;@include /etc/nginx/mime.types;\n\tinclude /etc/nginx/conf.d/*.conf;@" /etc/nginx/nginx.conf',
-    unless  => '/bin/grep "include /etc/nginx/conf.d/\*.conf;" /etc/nginx/nginx.conf',
+  exec {
+    # rewrite gentoo nginx.conf to add conf.d support using sed in a quirky
+    # manner due to the augeas Nginxconf.lns lens not supporting nested
+    # configs ala gentoo.
+    'nginx-add-conf.d':
+      command => '/bin/sed --in-place -e "s@include /etc/nginx/mime.types;@include /etc/nginx/mime.types;\n\tinclude /etc/nginx/conf.d/*.conf;@" /etc/nginx/nginx.conf',
+      unless  => '/bin/grep "include /etc/nginx/conf.d/\*.conf;" /etc/nginx/nginx.conf';
   } ~>
-  exec { 'restart-nginx-after-conf':
-    command     => '/etc/init.d/nginx restart',
-    refreshonly => true
+  exec {
+    # Trigger nginx restart manually afterwards since the service is managed 
+    # by the nginx class and I can't notify => it from here due to circular
+    # dependency issues with that.
+    'restart-nginx-after-conf':
+      command     => '/etc/init.d/nginx restart',
+      refreshonly => true
   }
 
-  nginx::resource::upstream { 'puppetboard':
-    ensure  => present,
-    members => [
-      '127.0.0.1:9090',
-    ]
+  # ### Nginx Configuration
+  nginx::resource::upstream {
+    # Configure puppetboard as an upstream resource using nginx module.
+    'puppetboard':
+      ensure  => present,
+      members => [
+        '127.0.0.1:9090',
+      ]
   } ->
-  file { '/var/www/puppet.vagrant.local':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'nobody',
-    mode   => '0766',
+  file {
+    # Make sure the wwwroot exists and is readable.
+    '/var/www/puppet.vagrant.local':
+      ensure => directory,
+      owner  => 'root',
+      group  => 'nobody',
+      mode   => '0766',
   } ->
-  nginx::resource::vhost { 'puppet.vagrant.local' :
-    listen_ip          => '0.0.0.0',
-    default_server     => true,
-    www_root           => '/var/www/puppet.vagrant.local',
-    template_directory => '/vagrant/manifests/profile/templates/puppet/nginx_location.conf.erb',
+  nginx::resource::vhost {
+    # add puppetboard vhost to nginx config using a local template
+    # made for puppetboard.
+    # @todo Use the erb file as template after switch to being module.
+    'puppet.vagrant.local' :
+      listen_ip          => '0.0.0.0',
+      default_server     => true,
+      www_root           => '/var/www/puppet.vagrant.local',
+      template_directory => '/vagrant/manifests/profile/templates/puppet/nginx_location.conf.erb',
   } ->
-  group { 'puppetboard':
-    ensure => present,
-    system => true,
+  # ### Puppetboard Configuration
+  group {
+    # Add ``puppetboard`` system group.
+    'puppetboard':
+      ensure => present,
+      system => true,
   } ->
-  user { 'puppetboard':
-    ensure => present,
-    system => true,
-    gid    => 'puppetboard',
+  user {
+    # Add ``puppetboard`` system user.
+    'puppetboard':
+      ensure => present,
+      system => true,
+      gid    => 'puppetboard',
   } ->
-  file { '/var/log/puppetboard/':
-    ensure => directory,
-    owner  => 'puppetboard',
-    group  => 'puppetboard',
+  file {
+    # Create logdir with ``puppetboard`` permissions.
+    '/var/log/puppetboard/':
+      ensure => directory,
+      owner  => 'puppetboard',
+      group  => 'puppetboard',
   } ->
-  augeas { 'puppetboard-uwsgi':
-    context => '/files/etc/conf.d/uwsgi.puppetboard',
-    lens    => 'Shellvars.lns',
-    incl    => '/etc/conf.d/uwsgi.puppetboard',
-    changes => [
-      'set UWSGI_USER puppetboard',
-      'set UWSGI_GROUP puppetboard',
-      'set UWSGI_LOG_FILE /var/log/puppetboard/uwsgi.log',
-      'set UWSGI_DIR /var/www/puppet.vagrant.local',
-      "set UWSGI_EXTRA_OPTIONS '\"--http 127.0.0.1:9090 --uwsgi-socket 127.0.0.1:9091 --plugin python27 --wsgi-file ${wsgi_script}\"'",
-    ]
+  augeas {
+    # Set basic uswgi options injected via UWSGI_EXTRA_OPTIONS in conf.d.
+    'puppetboard-uwsgi':
+      context => '/files/etc/conf.d/uwsgi.puppetboard',
+      lens    => 'Shellvars.lns',
+      incl    => '/etc/conf.d/uwsgi.puppetboard',
+      changes => [
+        'set UWSGI_USER puppetboard',
+        'set UWSGI_GROUP puppetboard',
+        'set UWSGI_LOG_FILE /var/log/puppetboard/uwsgi.log',
+        'set UWSGI_DIR /var/www/puppet.vagrant.local',
+        "set UWSGI_EXTRA_OPTIONS '\"--http 127.0.0.1:9090 --uwsgi-socket 127.0.0.1:9091 --plugin python27 --wsgi-file ${wsgi_script}\"'",
+      ]
   } ->
-  file { $wsgi_script:
-    ensure  => file,
-    content => 'from puppetboard.app import app as application',
-    mode    => '0644',
+  file { 
+    # Create one-liner ``uwsgi.py`` python uwsgi runtime as per
+    # puppetboard documentation.
+    $wsgi_script:
+      ensure  => file,
+      content => 'from puppetboard.app import app as application',
+      mode    => '0644',
   } ->
-  file { '/etc/init.d/uwsgi.puppetboard':
-    ensure => link,
-    target => '/etc/init.d/uwsgi',
+  file {
+    # Create ``uwsgi.puppetboard`` symlink in gentoo uswgi config fashion.
+    '/etc/init.d/uwsgi.puppetboard':
+      ensure => link,
+      target => '/etc/init.d/uwsgi',
   } ->
-  service { 'uwsgi.puppetboard':
-    ensure  => running,
-    enable  => true,
-    require => [
-      Class['nginx'],
-      Service['puppetmaster']
-    ]
+  service {
+    # Start and enabel ``uswgi.puppetboard`` service.
+    'uwsgi.puppetboard':
+      ensure  => running,
+      enable  => true,
+      require => [
+        Class['nginx'],
+        Service['puppetmaster']
+      ]
   }
 
-  # puppetmaster
+  # ### Puppet Master install
   package_use { 'app-admin/puppet':
     ensure => present,
     use    => [

@@ -1,5 +1,7 @@
 # ## Class: profile::elasticsearch
 #
+# Installs the most current ~amd64 elasticsearch package
+# available on portage.
 #
 class profile::elasticsearch {
   portage::package { 'app-misc/elasticsearch':
