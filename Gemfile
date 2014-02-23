@@ -17,3 +17,5 @@
 source "https://rubygems.org"
 
 gem "veewee"
+gem "puppet"
+gem "librarian-puppet"
