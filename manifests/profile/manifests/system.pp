@@ -1,10 +1,14 @@
+# # Class: profile::system
+#
+# Basic profile that gets applied on all systems.
+#
 class profile::system {
 
-  # these must exists even on an empty repo
-  # after running this the first time it
-  # should get populated by binaries that
-  # make subsequentive runs much faster
   file {
+    # these must exists even on an empty repo
+    # after running this the first time it
+    # should get populated by binaries that
+    # make subsequentive runs much faster
     '/vagrant/portage':
       ensure => directory;
     '/vagrant/portage/packages':
@@ -12,7 +16,18 @@ class profile::system {
     '/etc/puppet/hiera.yaml':
       ensure  => file,
       content => 'version: 2',
-      mode    => '0744',
+      mode    => '0744';
+    # to make life easier for developers we create an
+    # empty local overlay
+    '/usr/local/portage/':
+      ensure  => directory;
+    '/usr/local/portage/make.conf':
+      ensure  => file;
+    '/usr/local/portage/metadata':
+      ensure  => directory;
+    '/usr/local/portage/metadata/layout.conf':
+      ensure  => file,
+      content => 'masters = gentoo';
   } ->
   # manage /etc/portage/make.conf
   portage::makeconf {
