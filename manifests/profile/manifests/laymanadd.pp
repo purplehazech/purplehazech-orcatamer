@@ -16,8 +16,10 @@ class profile::laymanadd {
     ensure   => 'present',
     keywords => '~amd64',
   }
+  include ::sudo
   package { 'app-portage/layman-add':
-    ensure => present,
+    ensure  => present,
+    require => Class['sudo']
   }
 
 }

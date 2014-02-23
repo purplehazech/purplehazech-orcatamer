@@ -28,6 +28,8 @@ mod "purplehazech/syslogng"
 mod "example42/mysql"
 # we need nginx for some webserver needs
 mod "example42/nginx"
+# sudo is needed by layman-add and we will be using it anyhow
+mod "saz/sudo"
 
 # system under development (this is currently being worked on)
 mod "zabbix",
