@@ -115,6 +115,12 @@ class profile::system {
       ];
   } -> Class['ccache']
 
+  portage::package { 'dev-vcs/git':
+    ensure => present,
+    use    => [
+      'curl',
+    ],
+  } ->
   # install most portage tools
   class { 'portage':
     # bump eix due to bugs with --format '<bestversion:LASTVERSION>' in 0.29.0
