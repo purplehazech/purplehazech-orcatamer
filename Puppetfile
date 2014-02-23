@@ -31,5 +31,5 @@ mod "example42/nginx"
 
 # system under development (this is currently being worked on)
 mod "zabbix",
-  :git => "git://github.com/purplehazech/puppet-zabbix.git",
+  :git => "https://github.com/purplehazech/puppet-zabbix.git",
   :ref => "feature/gentoo-cleanup"
