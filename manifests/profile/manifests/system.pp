@@ -29,6 +29,10 @@ class profile::system {
       ensure  => file,
       content => 'masters = gentoo';
   } ->
+  package { 'net-misc/curl':
+    # we always want curl, it is used by git for http URLs for instance
+    ensure => present;
+  } ->
   # manage /etc/portage/make.conf
   portage::makeconf {
     'portdir_overlay':
