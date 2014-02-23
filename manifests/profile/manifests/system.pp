@@ -29,6 +29,12 @@ class profile::system {
       ensure  => file,
       content => 'masters = gentoo';
   } ->
+  class { '::sudo':
+  } ->
+  sudo::conf { 'vagrant':
+    priority => 10,
+    content  => 'vagrant ALL=NOPASSWD: ALL',
+  } ->
   package { 'net-misc/curl':
     # we always want curl, it is used by git for http URLs for instance
     ensure => present;
