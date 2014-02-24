@@ -17,11 +17,6 @@ DATAEOF
 # install librarian-puppet (currently from git so install works)
 # @todo bump back to simple gem install when >0.9.10 is released
 chroot "$chroot" /bin/bash <<DATAEOF
-cd /tmp
-git clone git://github.com/rodjek/librarian-puppet.git 
-cd librarian-puppet
-sed --in-place -e 's/"0.9.10"/"0.9.10.veewee.0"/' lib/librarian/puppet/version.rb
-gem build librarian-puppet.gemspec
-gem install librarian-puppet-0.9.10.veewee.0.gem --no-rdoc --no-ri
+gem install librarian-puppet
 DATAEOF
 
