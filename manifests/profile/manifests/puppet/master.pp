@@ -14,8 +14,8 @@
 #
 class profile::puppet::master {
 
-  $optiz0r_overlay = 'git://github.com/optiz0r/gentoo-overlay.git'
-  $rabe_overlay = 'git://github.com/purplehazech/rabe-portage-overlay.git'
+  $optiz0r_overlay = 'https://github.com/optiz0r/gentoo-overlay.git'
+  $rabe_overlay = 'https://github.com/purplehazech/rabe-portage-overlay.git'
 
   # puppetdb
   exec {

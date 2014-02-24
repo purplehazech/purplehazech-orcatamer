@@ -4,7 +4,7 @@ source /etc/profile
 # remove git's dependency on 50+ perl modules.
 cat <<DATAEOF >> "$chroot/etc/portage/package.use/git"
 # git with no dependency
-dev-vcs/git -curl -perl -gpg -webdav
+dev-vcs/git curl -perl -gpg -webdav
 
 # git with massive dependency with subversion support
 #dev-vcs/git -gpg perl -webdav subversion
