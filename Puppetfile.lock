@@ -15,7 +15,7 @@ FORGE
     purplehazech/ccache (0.1.0)
     purplehazech/syslogng (0.4.0)
       puppetlabs/stdlib (~> 4.0)
-    saz/sudo (3.0.1)
+    saz/sudo (3.0.2)
       puppetlabs/stdlib (>= 2.3.0)
 
 GIT
