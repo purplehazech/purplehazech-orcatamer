@@ -138,13 +138,8 @@ destroyed and on subsequent rebuilds.
 * [x] inject /etc/puppet/hiera.yaml with vagrant
 * [ ] refactor docs to make veewee less important
 * [x] split ``manifests/{profile,role}`` into their own modules
-* [ ] find a way to force build on missing binpkg
+* [x] find a way to force build on missing binpkg
 * [ ] create veewee machine
 * [ ] manage /etc/hosts and switch to hostnames where ips are in use (only in ``::profile`` afaik)
 * [ ] refactor veewee build to install puppet right away and only use puppet thereafter
-* [ ] use these (with logstash) on veewee output to find unbuilt packages
-``
-  />>> .* (. of .) /
-  /^\(=.*\)$/
-  /\[ebuild.*\] \(.*\) .*$/
-``
+* [ ] use @unavailable-binaries buil unbuilt packages (see #1)
