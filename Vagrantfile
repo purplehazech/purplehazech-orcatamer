@@ -73,4 +73,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       box.vm.network "forwarded_port", guest: 9292, host: 8081
       box.vm.network "forwarded_port", guest: 9200, host: 9200
   end
+
+  # pump.io machine
+  config.vm.define "pumpio" do |box|
+      box.vm.hostname = "pumpio.vagrant.local"
+
+      box.vm.provision :shell, :path => "shell/puppethost.sh"
+      box.vm.provision "puppet_server" do |puppet|
+      	puppet.options = PUPPET_EXTRA_OPTIONS
+      end
+
+      box.vm.network "private_network", ip: "10.30.0.40", virtualbox__intnet: "vagrant.local"
+      box.vm.network "forwarded_port", guest: 443, host: 8082
+  end
 end
