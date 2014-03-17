@@ -1,21 +1,21 @@
 FORGE
   remote: http://forge.puppetlabs.com
   specs:
-    example42/mysql (2.1.2)
+    example42/mysql (2.1.3)
       example42/puppi (>= 2.0.0)
       puppetlabs/stdlib (>= 2.0.0)
     example42/nginx (2.1.4)
       example42/puppi (>= 2.0.0)
       puppetlabs/concat (>= 1.0.0)
-    example42/puppi (2.1.7)
+    example42/puppi (2.1.9)
     gentoo/portage (2.2.0-rc1)
       puppetlabs/concat (~> 1.0.0)
-    puppetlabs/concat (1.0.1)
+    puppetlabs/concat (1.0.2)
     puppetlabs/stdlib (4.1.0)
     purplehazech/ccache (0.1.0)
-    purplehazech/syslogng (0.4.0)
+    purplehazech/syslogng (0.5.0)
       puppetlabs/stdlib (~> 4.0)
-    saz/sudo (3.0.2)
+    saz/sudo (3.0.3)
       puppetlabs/stdlib (>= 2.3.0)
 
 GIT
@@ -27,11 +27,27 @@ GIT
       example42/mysql (>= 2.1.1)
       puppetlabs/stdlib (>= 3.2.0)
 
+GIT
+  remote: https://github.com/purplehazech/purplehazech-orcatamer-profile.git
+  ref: master
+  sha: 86da7dfba61af55b3aa3c433f95c1c2699435058
+  specs:
+    purplehazech/profile (0.0.1-develop)
+
+GIT
+  remote: https://github.com/purplehazech/purplehazech-orcatamer-role.git
+  ref: master
+  sha: 6130242676b165ff59e9a8413dcbab0c7681a553
+  specs:
+    purplehazech/role (0.0.1-develop)
+
 DEPENDENCIES
   example42/mysql (>= 0)
   example42/nginx (>= 0)
   gentoo/portage (>= 0)
   purplehazech/ccache (>= 0)
+  purplehazech/profile (>= 0)
+  purplehazech/role (>= 0)
   purplehazech/syslogng (>= 0)
   saz/sudo (>= 0)
   zabbix (>= 0)
