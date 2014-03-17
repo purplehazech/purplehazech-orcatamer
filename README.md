@@ -137,7 +137,7 @@ destroyed and on subsequent rebuilds.
 * [x] local Veeveefile and templates
 * [x] inject /etc/puppet/hiera.yaml with vagrant
 * [ ] refactor docs to make veewee less important
-* [ ] split ``manifests/{profile,role}`` into their own modules
+* [x] split ``manifests/{profile,role}`` into their own modules
 * [ ] find a way to force build on missing binpkg
 * [ ] create veewee machine
 * [ ] manage /etc/hosts and switch to hostnames where ips are in use (only in ``::profile`` afaik)
