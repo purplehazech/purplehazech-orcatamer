@@ -18,6 +18,11 @@ forge "http://forge.puppetlabs.com"
 
 modulefile
 
+# puppet roles
+mod "purplehazech/role",
+  :git => "https://github.com/purplehazech/purplehazech-orcatamer-role.git",
+  :ref => "master"
+
 # managing gentoo with their module makes sense
 mod "gentoo/portage"
 # ccache makes compiles a tiny bit faster
