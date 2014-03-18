@@ -45,7 +45,7 @@ GIT
 GIT
   remote: https://github.com/purplehazech/purplehazech-orcatamer-profile.git
   ref: master
-  sha: 7de2f462f3822c3c87295808a878631c0db2f766
+  sha: ea0268c4c00b09cc7c49ce7d2cb7fb9a31d9113d
   specs:
     purplehazech/profile (0.0.1-develop)
       camptocamp/openssl (>= 0)
