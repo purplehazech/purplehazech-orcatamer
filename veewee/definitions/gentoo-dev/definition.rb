@@ -23,7 +23,7 @@ Veewee::Definition.declare({
     'vagrant<Enter><Wait>',
     'vagrant<Enter><Wait>',
     '/etc/init.d/sshd start<Enter>',
-    'watch ps af'
+    'watch ps af<Enter>'
   ],
   :kickstart_port    => '7122',
   :kickstart_timeout => 10000,

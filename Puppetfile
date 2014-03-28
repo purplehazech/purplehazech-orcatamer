@@ -28,7 +28,9 @@ mod "purplehazech/profile",
 
 
 # managing gentoo with their module makes sense
-mod "gentoo/portage"
+mod "gentoo/portage",
+  :git => "https://github.com/gentoo/puppet-portage.git",
+  :ref => "master"
 # ccache makes compiles a tiny bit faster
 mod "purplehazech/ccache"
 # every machine needs a well configured syslogger

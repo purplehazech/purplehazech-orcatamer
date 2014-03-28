@@ -12,7 +12,7 @@ chmod 600 "$chroot/home/vagrant/.ssh/authorized_keys"
 cp -f /root/.vbox_version "$chroot/home/vagrant/.vbox_version"
 vbox_version=$(cat /root/.vbox_version)
 echo "export vbox_version=$vbox_version" >> /etc/profile.d/settings.sh
-cp /etc/profile.d/settings.sh $CHROOT/etc/profile.d/
+cp /etc/profile.d/settings.sh $chroot/etc/profile.d/
 
 mkdir -p "$chroot/root/.ssh" 2> /dev/null
 
