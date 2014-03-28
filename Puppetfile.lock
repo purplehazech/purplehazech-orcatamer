@@ -1,22 +1,43 @@
 FORGE
   remote: http://forge.puppetlabs.com
   specs:
-    example42/mysql (2.1.2)
+    camptocamp/openssl (0.2.0)
+      puppetlabs/stdlib (>= 2.0.0)
+    example42/mongodb (2.0.14)
+      example42/puppi (>= 2.0.0)
+    example42/mysql (2.1.3)
       example42/puppi (>= 2.0.0)
       puppetlabs/stdlib (>= 2.0.0)
     example42/nginx (2.1.4)
       example42/puppi (>= 2.0.0)
       puppetlabs/concat (>= 1.0.0)
-    example42/puppi (2.1.7)
-    gentoo/portage (2.2.0-rc1)
-      puppetlabs/concat (~> 1.0.0)
-    puppetlabs/concat (1.0.1)
+    example42/puppi (2.1.9)
+    puppetlabs/apt (1.4.2)
+      puppetlabs/stdlib (>= 2.2.1)
+    puppetlabs/concat (1.0.2)
     puppetlabs/stdlib (4.1.0)
     purplehazech/ccache (0.1.0)
-    purplehazech/syslogng (0.4.0)
+    purplehazech/syslogng (0.5.0)
       puppetlabs/stdlib (~> 4.0)
-    saz/sudo (3.0.2)
+    saz/sudo (3.0.3)
       puppetlabs/stdlib (>= 2.3.0)
+
+GIT
+  remote: https://github.com/gentoo/puppet-portage.git
+  ref: master
+  sha: c04ae99c62c2fe7e6431a6d92a672e970a18b59c
+  specs:
+    gentoo/portage (2.2.0-rc1)
+      puppetlabs/concat (~> 1.0.0)
+
+GIT
+  remote: https://github.com/hairmare/puppetlabs-nodejs.git
+  ref: feature/gentoo
+  sha: 1ac517780b7bcaaf7e258fa3f0de5bc64c7f1f87
+  specs:
+    puppetlabs/nodejs (0.4.0)
+      puppetlabs/apt (>= 0.0.3)
+      puppetlabs/stdlib (>= 2.0.0)
 
 GIT
   remote: https://github.com/purplehazech/puppet-zabbix.git
@@ -25,13 +46,33 @@ GIT
   specs:
     zabbix (0.0.2)
       example42/mysql (>= 2.1.1)
+      gentoo/portage (>= 2.1.0)
       puppetlabs/stdlib (>= 3.2.0)
+
+GIT
+  remote: https://github.com/purplehazech/purplehazech-orcatamer-profile.git
+  ref: master
+  sha: 82dd76a8b2df771314586ef0e95f7c1316eb9246
+  specs:
+    purplehazech/profile (0.0.1-develop)
+      camptocamp/openssl (>= 0)
+      example42/mongodb (>= 0)
+      puppetlabs/nodejs (>= 0)
+
+GIT
+  remote: https://github.com/purplehazech/purplehazech-orcatamer-role.git
+  ref: master
+  sha: bfb4e58fcf00ac1534555fe4d666635fa08af7ff
+  specs:
+    purplehazech/role (0.0.1-develop)
 
 DEPENDENCIES
   example42/mysql (>= 0)
   example42/nginx (>= 0)
   gentoo/portage (>= 0)
   purplehazech/ccache (>= 0)
+  purplehazech/profile (>= 0)
+  purplehazech/role (>= 0)
   purplehazech/syslogng (>= 0)
   saz/sudo (>= 0)
   zabbix (>= 0)

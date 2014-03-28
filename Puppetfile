@@ -18,8 +18,19 @@ forge "http://forge.puppetlabs.com"
 
 modulefile
 
+# puppet roles and profiles
+mod "purplehazech/role",
+  :git => "https://github.com/purplehazech/purplehazech-orcatamer-role.git",
+  :ref => "master"
+mod "purplehazech/profile",
+  :git => "https://github.com/purplehazech/purplehazech-orcatamer-profile.git",
+  :ref => "master"
+
+
 # managing gentoo with their module makes sense
-mod "gentoo/portage"
+mod "gentoo/portage",
+  :git => "https://github.com/gentoo/puppet-portage.git",
+  :ref => "master"
 # ccache makes compiles a tiny bit faster
 mod "purplehazech/ccache"
 # every machine needs a well configured syslogger

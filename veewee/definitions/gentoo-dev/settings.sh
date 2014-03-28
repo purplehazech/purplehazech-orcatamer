@@ -5,7 +5,8 @@ cat <<DATAEOF > "/etc/profile.d/veewee.sh"
 # retrieve from Gentoo current autobuild txt - these change regularly
 
 # distfiles source
-distfiles_url=http://distfiles.gentoo.org
+#distfiles_url=http://distfiles.gentoo.org
+distfiles_url=http://mirror.switch.ch/ftp/mirror/gentoo
 
 build_arch="amd64"
 build_proc="amd64"

@@ -94,7 +94,7 @@ After building and exporting a veewee box you can add it to
 vagrant and use it to provision a puppet master.
 
 ````bash
-vagrant box add gentoo-dev gentoo-dev.box
+vagrant box add orcatamer gentoo-dev.box
 vagrant up puppet
 ````
 
@@ -111,6 +111,16 @@ my machines will have.
 veewee vbox build  'gentoo-dev'
 veewee vbox export 'gentoo-dev'
 ````
+
+Due to issues with Virtualbox < 4.3.10 you might have to
+explicitly enable HVP on the box for it to boot without a
+kernel panic.
+
+````bash
+VBoxManage setextradata gentoo-dev VBoxInternal/CPUM/EnableHVP 1
+````
+
+This is described in https://www.virtualbox.org/ticket/12748.
 
 ## cleanup
 
@@ -137,14 +147,10 @@ destroyed and on subsequent rebuilds.
 * [x] local Veeveefile and templates
 * [x] inject /etc/puppet/hiera.yaml with vagrant
 * [ ] refactor docs to make veewee less important
-* [ ] split ``manifests/{profile,role}`` into their own modules
-* [ ] find a way to force build on missing binpkg
+* [x] split ``manifests/{profile,role}`` into their own modules
+* [x] find a way to force build on missing binpkg
 * [ ] create veewee machine
 * [ ] manage /etc/hosts and switch to hostnames where ips are in use (only in ``::profile`` afaik)
 * [ ] refactor veewee build to install puppet right away and only use puppet thereafter
-* [ ] use these (with logstash) on veewee output to find unbuilt packages
-``
-  />>> .* (. of .) /
-  /^\(=.*\)$/
-  /\[ebuild.*\] \(.*\) .*$/
-``
+* [ ] use @unavailable-binaries buil unbuilt packages (see #1)
+* [ ] replace virtualbox dependency with a real type 1 hypervisor (ie. refactor my dev laptop heavily)
