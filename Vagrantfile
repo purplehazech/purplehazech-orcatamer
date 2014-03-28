@@ -21,7 +21,7 @@ VAGRANTFILE_API_VERSION = "2"
 PUPPET_EXTRA_OPTIONS="--parser future --pluginsync"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "gentoo-dev"
+  config.vm.box = "orcatamer"
   config.vm.box_url = "http://bindist.hairmare.ch/gentoo-dev/gentoo-dev.box"
 
   # install puppetmaster using puppet apply

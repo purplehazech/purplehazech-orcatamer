@@ -94,7 +94,7 @@ After building and exporting a veewee box you can add it to
 vagrant and use it to provision a puppet master.
 
 ````bash
-vagrant box add gentoo-dev gentoo-dev.box
+vagrant box add orcatamer gentoo-dev.box
 vagrant up puppet
 ````
 
