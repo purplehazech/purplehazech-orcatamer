@@ -94,7 +94,7 @@ After building and exporting a veewee box you can add it to
 vagrant and use it to provision a puppet master.
 
 ````bash
-vagrant box add orcatamer gentoo-dev.box
+vagrant box add orcatamer orcatamer.box
 vagrant up puppet
 ````
 
@@ -108,8 +108,8 @@ definition for a gentoo box based on the specs that most of
 my machines will have.
 
 ````bash
-veewee vbox build  'gentoo-dev'
-veewee vbox export 'gentoo-dev'
+veewee vbox build  'orcatamer'
+veewee vbox export 'orcatamer'
 ````
 
 Due to issues with Virtualbox < 4.3.10 you might have to
@@ -117,7 +117,7 @@ explicitly enable HVP on the box for it to boot without a
 kernel panic.
 
 ````bash
-VBoxManage setextradata gentoo-dev VBoxInternal/CPUM/EnableHVP 1
+VBoxManage setextradata orcatamer VBoxInternal/CPUM/EnableHVP 1
 ````
 
 This is described in https://www.virtualbox.org/ticket/12748.
@@ -126,11 +126,11 @@ This is described in https://www.virtualbox.org/ticket/12748.
 
 ````bash
 # remove virtual machine built by veewee
-veewee vbox remove gentoo-dev
+veewee vbox remove orcatamer
 # remove all miachines deployed by vagrant
 vagrant destroy
-# remove base bo from vagrant
-vagrant box remove gentoo-dev
+# remove base box from vagrant
+vagrant box remove orcatamer
 ````
 
 ## usage
